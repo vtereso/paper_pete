@@ -24,7 +24,6 @@ func WalkDirectory(rootpath string, fileParserChain []parser.FileParser) (map[st
 			}
 			for _, fileParser := range fileParserChain {
 				if fileParser.Accepts(file) {
-					fmt.Printf("%s was accepted\n", file.Name())
 					filePackages, err := fileParser.GetPackages(file)
 					if err != nil {
 						fmt.Printf("Error getting packages for file %s: %s\n", file.Name(), err)

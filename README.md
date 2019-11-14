@@ -106,5 +106,5 @@ Each routine could send its results over a channel (multiple writers, one reader
 Although in practice all imports are at the top, I don't know if it can be guaranteed this would be the case for arbitrary packages.
 Benchmarks would be necessary to determine if this is truly an optimization; this implementation for `go list` doesn't do so, which presents further doubt.
 
-
-
+I have tested this by using `go run main.go` within the project directory. In order to run this against different directories.
+In order to test this against other repositories, run `go install`, get into the working directory/path that you want to execute this program against and then execute `paper_pete`.
