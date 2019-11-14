@@ -15,7 +15,7 @@ import (
 // "d"
 // "ee"
 // )
-var goPackageRegex = regexp.MustCompile(`import\s*\(\s*(?:\n\s*.*\"([a-zA-Z0-9._]*)\"\s*)*\)`)
+var goPackageRegex = regexp.MustCompile(`[ \t]*import[ \t]*\(\n(?:[ \t]*\"([a-zA-Z0-9._]*)\"[ \t]*\n)*\)`)
 
 // GoParser accepts files with a `.go` file format
 type GoParser struct{}
@@ -31,9 +31,10 @@ func (g GoParser) GetPackages(file *os.File) (packages []string, err error) {
 	if err != nil {
 		return nil, err
 	}
-	matches := goPackageRegex.FindAll(b, -1)
+	matches := goPackageRegex.FindAllSubmatch(b, -1)
 	for _, match := range matches {
-		packages = append(packages, string(match))
+		packageCaptureGroup := string(match[1])
+		packages = append(packages, packageCaptureGroup)
 	}
 	return
 }

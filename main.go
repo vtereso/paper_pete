@@ -14,7 +14,7 @@ func main() {
 		fmt.Println("Could not get CWD", err)
 		os.Exit(1)
 	}
-	fmt.Println("Grabbing Go packages used within CWD:", cwd)
+	fmt.Println("Using CWD:", cwd)
 
 	// Extension point for other file format parsing
 	// Each parser should accept a distinct file type where the first parser that is satisified will "consume" the file
@@ -27,7 +27,9 @@ func main() {
 		fmt.Println("Error walking CWD", err)
 		os.Exit(1)
 	}
-	for _, p := range packages {
+	fmt.Println("Packages found")
+	fmt.Println("----------------")
+	for p, _ := range packages {
 		fmt.Println(p)
 	}
 }
