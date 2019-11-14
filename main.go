@@ -20,7 +20,7 @@ func main() {
 	// Each parser should accept a distinct file type where the first parser that is satisified will "consume" the file
 	// where it will be not passed to the next parser.
 	fileParserChain := []parser.FileParser{
-		GoParser{},
+		parser.GoParser{},
 	}
 	packages, err := path.WalkDirectory(cwd, fileParserChain)
 	if err != nil {

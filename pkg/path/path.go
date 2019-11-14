@@ -10,8 +10,9 @@ import (
 
 // WalkDirectory walks the directory path specified and returns all of the packages used within. The packages are determined by the
 // fileparsers.
-func WalkDirectory(rootpath string, fileParserChain []parser.FileParser) (packages map[string]struct{}, err error) {
-	err = filepath.Walk(rootpath, func(path string, info os.FileInfo, err error) error {
+func WalkDirectory(rootpath string, fileParserChain []parser.FileParser) (map[string]struct{}, error) {
+	packages := map[string]struct{}{}
+	err := filepath.Walk(rootpath, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
 		}
@@ -37,5 +38,5 @@ func WalkDirectory(rootpath string, fileParserChain []parser.FileParser) (packag
 		return nil
 	})
 	// Returns named parameters
-	return
+	return packages, err
 }
