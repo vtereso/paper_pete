@@ -89,10 +89,12 @@ This would be signficantly faster to parse since ultimately it is the source of 
 
 From a high level design, I will create FileParser interface that takes an [`os.File`](https://golang.org/src/os/types.go?s=369:411#L6) and returns the packages.
 Using an interface for this _could_ be overkill (this is a toy project presenting pathways to things that likely will not get updated), but at the same point is also provides an extensibility point for the different file types as mentioned above/previous.
+Also, go is somewhat unique with its package imports such that it would take more thought to make sense of the utility of this functionality across different programming languages, but I will create the extension point abstraction nonetheless.
 For the sake of simplicity, the packages returned will be a slice of strings; for the sake of having a (starting point/place to interate), this seems sufficient.
 
 The following command `go list -f '{{.Imports}}'` allows for a template to be passed, which allows the output of these packages to be customized; this too is an optimization/feature/improvement that I will forgo.
 At a later point, this code could be updated to return a struct that would make sense with this sort of templating.
+The output could also be stored per file, sorted, etc., which I will also forgo as it could be added at another point.
 
 As for the specifics, multiple files may use the same packages and in order to prevent duplicates, a map makes most sense.
 In this scenario, it is not a concern to pull members out, but rather check for the existance of packages already being used (hashset behavior).
