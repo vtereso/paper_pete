@@ -16,8 +16,8 @@ import (
 //
 // "ee"
 // )
-var goPackageRegex = regexp.MustCompile(`[ \t]*import[ \t]*\(\n(?:(?:[ \t]*\"(?:[a-zA-Z0-9_./]+(?:\/[a-zA-Z0-9_./]+)*)\"[ \t]*\n)|(?:[ \t]*\n))*\)`)
-var doubleQuotesRegex = regexp.MustCompile(`"([a-zA-Z0-9_./]+)"`)
+var goPackageRegex = regexp.MustCompile(`[ \t]*import[ \t]*\(\n(?:(?:[ \t]*\"(?:[a-zA-Z0-9_./-]+(?:\/[a-zA-Z0-9_./-]+)*)\"[ \t]*\n)|(?:[ \t]*\n))*\)`)
+var doubleQuotesRegex = regexp.MustCompile(`"([a-zA-Z0-9_./-]+)"`)
 
 // GoParser accepts files with a `.go` file format
 type GoParser struct{}
@@ -35,9 +35,10 @@ func (g GoParser) GetPackages(file *os.File) (packages []string, err error) {
 	}
 	matches := goPackageRegex.FindAll(b, -1)
 	for _, match := range matches {
-		actualPackages := doubleQuotesRegex.FindAll(match, -1)
+		actualPackages := doubleQuotesRegex.FindAllSubmatch(match, -1)
 		for _, actualPackage := range actualPackages {
-			packages = append(packages, string(actualPackage))
+			// Add the capture group, not the double quotes
+			packages = append(packages, string(actualPackage[1]))
 		}
 	}
 	return
