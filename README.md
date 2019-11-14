@@ -112,3 +112,6 @@ In order to test this against other repositories, run `go install`, get into the
 From the time I started development, I recognized that testing was going to be very different from traditional unit testing because having to deal with files doesn't lend itself to using testing tables as traditionally. Since I am just about at time, I will make a test for `WalkDirectory` and ensure that the expected `map[string]struct{}` matches the actual values when run against this repository.
 
 As a further improvement, I would further tune the regex as it does not support packages that are commented out within the import blob.
+
+
+To run the go tests, I normally use `go test -v -count=1 ./...` from the top level directory of any project I am using. Within the test I used a git command so this would need to be compatible. I am not sure if there is a more simplistic way to get the same behavior.
